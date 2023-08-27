@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# move to other dir to run cron
-# * * * * * /home/jac/script/sync.sh # stops at push
+
+# Install dependencies
+sudo apt update
+sudo apt install -y git libnotify-bin pulseaudio
 
 notify-send -i "Script Notification" "Checking for changes"
-paplay /home/jac/Music/sinister-laugh-140131.wav
 
 directory="/home/jac/DevMindMap/"
 
@@ -13,9 +14,7 @@ cd "$directory" || exit
 
 gstatus=$(git status --porcelain)
 
-# Check if the argument is provided
-
-
+# Check if there are any changes to commit
 if [[ ${#gstatus} -ne 0 ]]; then
     commit_message="${1:-$gstatus}"
     git add --all
@@ -23,9 +22,8 @@ if [[ ${#gstatus} -ne 0 ]]; then
 
     git pull
     git push
-    notify-send -i "Script Notification" "Saved changes to github" 
+    notify-send -i "Script Notification" "Saved changes to GitHub"
 fi
-
 
 
 
