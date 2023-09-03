@@ -8,8 +8,9 @@ sudo apt install -y git libnotify-bin pulseaudio
 notify-send -i "Script Notification" "Checking for changes"
 #paplay /home/jac/Music/sinister-laugh-140131.wav
 
-
-directory="/home/jac/DevMindMap/"
+echo "Please enter the directory path:"
+read directory
+#directory="/home/jac/DevMindMap/"
 
 # Change to the selected directory
 cd "$directory" || exit
