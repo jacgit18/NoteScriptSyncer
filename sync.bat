@@ -1,38 +1,35 @@
 @echo off
 
-:: Install dependencies
-:: Note: In a batch script, you cannot use 'sudo' as in Linux. You'd need to run the script as an administrator.
-:: You should make sure the required dependencies are installed manually.
+:: Install dependencies (Note: Windows commands may differ)
+:: You might need to install equivalent software for libnotify and paplay
+:: and update the paths accordingly.
+:: Example: For notification, you could use "msg" command.
+:: For audio, you can use "start" to play a sound file.
 
-:: Display a notification
-echo Checking for changes...
-:: You can use other methods to show notifications in Windows, as the 'notify-send' command isn't available.
-:: Here, we're just using 'echo' for demonstration.
+:: Notify that we are checking for changes (equivalent to notify-send)
+msg * "Checking for changes"
 
-:: Play a sound (uncomment this line if you want to play a sound)
-:: start "" "C:\path\to\sound.wav"
+:: Play a sound (equivalent to paplay)
+start "" "C:\Path\to\sinister-laugh-140131.wav"
 
-:: Prompt the user for a directory path
-set /p directory=Please enter the directory path:
+set "directory=%1"
 
-:: Change to the selected directory
+:: Change to the selected directory (note: CD command remains the same)
 cd /d "%directory%" || exit
 
-:: Check if there are any changes to commit
-:: Note: The condition to check if there are changes may vary depending on how Git is set up on your system.
-:: This is a simple example using 'git status'.
-for /f %%i in ('git status --porcelain') do set gstatus=%%i
+:: Check for changes in the directory using git
+:: Assuming you have Git installed on Windows
+:: (You may need to adjust the paths and Git-related settings)
+git status > temp.txt
+set /p gstatus=<temp.txt
+del temp.txt
 
-:: Check if 'gstatus' is not empty
+:: Check if there are changes
 if not "%gstatus%"=="" (
-    set commit_message=%1
+    set "commit_message=%1"
     git add --all
     git commit -m "%commit_message%"
-
     git pull
     git push
-
-    :: Display a notification
-    echo Saved changes to GitHub
-    :: You can use other methods to show notifications in Windows.
+    msg * "Saved changes to GitHub"
 )
