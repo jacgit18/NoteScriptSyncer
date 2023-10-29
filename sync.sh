@@ -5,7 +5,7 @@
 sudo apt update
 sudo apt install -y git libnotify-bin pulseaudio
 
-notify-send -i "Script Notification" "Checking for changes"
+notify-send -i "Script Notification" "Checking for changes" // libnotify optional dependencey that sends notification
 #paplay /home/jac/Music/sinister-laugh-140131.wav
 
 echo "Please enter the directory path:"
@@ -25,7 +25,7 @@ if [[ ${#gstatus} -ne 0 ]]; then
 
     git pull
     git push
-    notify-send -i "Script Notification" "Saved changes to GitHub"
+    notify-send -i "Script Notification" "Saved changes to GitHub"// libnotify optional dependencey that sends notification
 fi
 
 
