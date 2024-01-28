@@ -5,7 +5,7 @@ sudo apt update
 sudo apt install -y git libnotify-bin pulseaudio
 
 notify-send -i "Script Notification" "Checking for changes" // libnotify optional dependencey that sends notification
-paplay /home/jac/Music/sinister-laugh-140131.wav
+# paplay /home/jac/Music/sinister-laugh-140131.wav
 
 directory="$1"
 
@@ -13,19 +13,23 @@ directory="$1"
 cd "$directory" || exit
 
 gstatus=$(git status --porcelain)
+gstatusCommit=$(git status --porcelain | grep '^[ MARC??]')
 
 # Check if the argument is provided
-
+    git pull
 
 if [[ ${#gstatus} -ne 0 ]]; then
-    commit_message="${1:-$gstatus}"
     git add --all
-    git commit -m "$commit_message"
+    git commit -m "$gstatusCommit"
+
 
     git pull
     git push
     notify-send -i "Script Notification" "Saved changes to github" // libnotify optional dependencey that sends notification
 fi
+
+
+
 
 
 
